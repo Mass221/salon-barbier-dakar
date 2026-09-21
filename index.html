@@ -3,209 +3,245 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Le Sénégalais Barbier — Salon homme à Dakar</title>
+  <title>Le Maître du Ciseau — Barbier Homme à Dakar</title>
+  <meta name="description" content="Salon de coiffure pour homme à Dakar. Coupe, barbe, soins. Tarifs en FCFA. Réservez sur WhatsApp.">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            ink: '#0a0a0b',
-            charcoal: '#141416',
-            gold: '#c9a227',
-            goldsoft: '#e0c15c',
+            ink:    '#0a0a0b',
+            coal:   '#141416',
+            charcoal:'#1c1c20',
+            gold:   '#d4af37',
+            goldlt: '#e9c766',
           },
           fontFamily: {
             display: ['"Playfair Display"', 'serif'],
-            sans: ['Inter', 'sans-serif'],
+            sans:    ['Montserrat', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            gold: '0 0 40px -8px rgba(212,175,55,.55)',
           }
         }
       }
     }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
   <style>
     html { scroll-behavior: smooth; }
-    body { background-color: #0a0a0b; }
-    .glow { box-shadow: 0 0 40px rgba(201,162,39,0.25); }
-    .text-gradient {
-      background: linear-gradient(90deg, #e0c15c, #c9a227, #8a6d12);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    body { background:#0a0a0b; }
+    /* Grain / texture léger */
+    .grain::before{
+      content:""; position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.03;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
-    .card-hover { transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease; }
-    .card-hover:hover { transform: translateY(-6px); border-color: #c9a227; box-shadow: 0 20px 50px rgba(201,162,39,0.15); }
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    /* Grain / texture subtile */
-    .noise::before {
-      content:''; position: fixed; inset:0; pointer-events:none; z-index:1;
-      opacity:.035; background-image: radial-gradient(#fff 1px, transparent 1px);
-      background-size: 3px 3px;
+    .reveal{ opacity:0; transform:translateY(28px); transition:.7s cubic-bezier(.2,.7,.2,1); }
+    .reveal.on{ opacity:1; transform:none; }
+    .wa-pulse{ animation: wa 2.2s infinite; }
+    @keyframes wa{
+      0%{ box-shadow:0 0 0 0 rgba(37,211,102,.55); }
+      70%{ box-shadow:0 0 0 18px rgba(37,211,102,0); }
+      100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
     }
-    /* Bouton WhatsApp pulsation */
-    @keyframes pulseRing {
-      0% { box-shadow: 0 0 0 0 rgba(37,211,102,.55); }
-      70% { box-shadow: 0 0 0 18px rgba(37,211,102,0); }
-      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
-    }
-    .whatsapp-pulse { animation: pulseRing 2.2s infinite; }
   </style>
 </head>
-<body class="font-sans text-gray-200 antialiased noise">
+
+<body class="grain font-sans text-gray-200 antialiased selection:bg-gold selection:text-ink">
 
   <!-- ================= NAVBAR ================= -->
-  <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-ink/80 border-b border-white/5">
-    <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="#accueil" class="flex items-center gap-3">
-        <span class="w-10 h-10 rounded-full border border-gold/60 flex items-center justify-center text-gold">
+  <header class="fixed top-0 inset-x-0 z-50 transition-all duration-300" id="nav">
+    <nav class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-3">
+        <span class="grid place-items-center w-11 h-11 rounded-full border border-gold/60 text-gold">
           <i class="fa-solid fa-scissors"></i>
         </span>
-        <span class="font-display text-xl tracking-wide">Le Sénégalais <span class="text-gradient font-bold">Barbier</span></span>
+        <span class="leading-tight">
+          <span class="block font-display text-lg text-white">Le Maître du Ciseau</span>
+          <span class="block text-[10px] tracking-[.28em] text-gold/80 uppercase">Barbier · Dakar</span>
+        </span>
       </a>
-      <ul class="hidden md:flex items-center gap-8 text-sm text-gray-300">
-        <li><a href="#accueil" class="hover:text-gold transition">Accueil</a></li>
-        <li><a href="#services" class="hover:text-gold transition">Prestations</a></li>
+
+      <ul class="hidden md:flex items-center gap-9 text-sm font-medium tracking-wide">
+        <li><a href="#prestations" class="hover:text-gold transition">Prestations</a></li>
+        <li><a href="#galerie" class="hover:text-gold transition">Galerie</a></li>
+        <li><a href="#avis" class="hover:text-gold transition">Avis</a></li>
         <li><a href="#contact" class="hover:text-gold transition">Contact</a></li>
       </ul>
-      <a href="https://wa.me/221770000000?text=Bonjour%20Le%20S%C3%A9n%C3%A9galais%20Barbier%2C%20je%20souhaite%20r%C3%A9server%20un%20rendez-vous."
-         target="_blank" rel="noopener"
-         class="hidden sm:inline-flex items-center gap-2 bg-gold hover:bg-goldsoft text-ink font-semibold px-5 py-2.5 rounded-full text-sm transition">
-        <i class="fa-brands fa-whatsapp text-lg"></i> Réserver
+
+      <a href="#reserver"
+         class="hidden sm:inline-flex items-center gap-2 bg-gold text-ink font-bold text-sm px-5 py-2.5 rounded-full hover:bg-goldlt transition">
+        <i class="fa-brands fa-whatsapp text-base"></i> Réserver
       </a>
+
+      <button id="burger" class="md:hidden text-2xl text-gold" aria-label="Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
     </nav>
+
+    <!-- Menu mobile -->
+    <div id="mobileMenu" class="md:hidden hidden bg-coal/95 backdrop-blur border-t border-white/5">
+      <ul class="px-6 py-5 space-y-4 text-base">
+        <li><a href="#prestations" class="mobile-link block">Prestations</a></li>
+        <li><a href="#galerie" class="mobile-link block">Galerie</a></li>
+        <li><a href="#avis" class="mobile-link block">Avis</a></li>
+        <li><a href="#contact" class="mobile-link block">Contact</a></li>
+        <li>
+          <a href="#reserver" class="mobile-link inline-flex items-center gap-2 bg-gold text-ink font-bold px-5 py-2.5 rounded-full">
+            <i class="fa-brands fa-whatsapp"></i> Réserver
+          </a>
+        </li>
+      </ul>
+    </div>
   </header>
 
   <!-- ================= HERO ================= -->
-  <section id="accueil" class="relative min-h-screen flex items-center justify-center pt-28 pb-20 px-6 overflow-hidden">
-    <!-- Fond dégradé + halo -->
-    <div class="absolute inset-0 -z-10">
-      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gold/10 rounded-full blur-[140px]"></div>
-      <div class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-gold/5 rounded-full blur-[120px]"></div>
+  <section id="top" class="relative min-h-screen flex items-center overflow-hidden">
+    <!-- Fond image + voile sombre -->
+    <div class="absolute inset-0">
+      <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?au&fit=crop&w=1920&q=80"
+           alt="Barbier en pleine coupe" class="w-full h-full object-cover">
+      <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/90 to-ink/40"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/70"></div>
     </div>
 
-    <div class="max-w-4xl text-center">
-      <p class="uppercase tracking-[0.4em] text-gold text-xs mb-6 reveal">Dakar · Plateau · Médina</p>
-      <h1 class="font-display text-5xl sm:text-7xl lg:text-8xl font-black leading-tight mb-6 reveal">
-        L'art du <span class="text-gradient">barbier</span><br>à la dakaroise
-      </h1>
-      <p class="text-gray-400 text-lg max-w-xl mx-auto mb-10 reveal leading-relaxed">
-        Coupes précises, dégradés nets et soins de la barbe. Un savoir-faire masculin,
-        une ambiance élégante au cœur de Dakar.
-      </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center reveal">
-        <a href="https://wa.me/221770000000?text=Bonjour%2C%20je%20souhaite%20r%C3%A9server%20un%20rendez-vous%20au%20salon."
-           target="_blank" rel="noopener"
-           class="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebe5b] text-white font-semibold px-8 py-4 rounded-full transition whatsapp-pulse">
-          <i class="fa-brands fa-whatsapp text-xl"></i> Prendre rendez-vous
-        </a>
-        <a href="#services" class="inline-flex items-center justify-center gap-2 border border-white/15 hover:border-gold hover:text-gold px-8 py-4 rounded-full transition">
-          <i class="fa-solid fa-list"></i> Voir les tarifs
-        </a>
-      </div>
+    <div class="relative z-10 max-w-6xl mx-auto px-5 pt-28 pb-20 w-full">
+      <div class="max-w-2xl">
+        <span class="inline-flex items-center gap-2 text-xs tracking-[.3em] uppercase text-gold mb-6 border border-gold/40 rounded-full px-4 py-1.5">
+          <i class="fa-solid fa-crown"></i> Depuis 2014 à Dakar
+        </span>
 
-      <!-- Stats -->
-      <div class="grid grid-cols-3 gap-6 max-w-lg mx-auto mt-16 text-center reveal">
-        <div><p class="font-display text-4xl text-gradient font-bold">10+</p><p class="text-xs text-gray-500 uppercase tracking-widest mt-1">Années</p></div>
-        <div><p class="font-display text-4xl text-gradient font-bold">5k+</p><p class="text-xs text-gray-500 uppercase tracking-widest mt-1">Clients</p></div>
-        <div><p class="font-display text-4xl text-gradient font-bold">6j/7</p><p class="text-xs text-gray-500 uppercase tracking-widest mt-1">Ouvert</p></div>
+        <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.05] mb-6">
+          L'art du <span class="text-gold">barbier</span><br> pour l'homme moderne.
+        </h1>
+
+        <p class="text-lg text-gray-300/90 mb-9 max-w-lg">
+          Coupe sur-mesure, taille de barbe au rasoir et soins premium.
+          Une expérience masculine, précise et sans compromis — au cœur de Dakar.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-4">
+          <a href="#reserver"
+             class="inline-flex items-center gap-3 bg-[#25D366] text-black font-bold px-7 py-4 rounded-full hover:brightness-110 transition shadow-lg">
+            <i class="fa-brands fa-whatsapp text-xl"></i> Réserver sur WhatsApp
+          </a>
+          <a href="#prestations"
+             class="inline-flex items-center gap-2 border border-white/20 text-white font-semibold px-7 py-4 rounded-full hover:border-gold hover:text-gold transition">
+            Voir les tarifs <i class="fa-solid fa-arrow-down text-xs"></i>
+          </a>
+        </div>
+
+        <!-- Stats -->
+        <div class="mt-14 grid grid-cols-3 max-w-md gap-4">
+          <div>
+            <p class="font-display text-3xl text-gold">10<span class="text-lg">+</span></p>
+            <p class="text-xs tracking-wide text-gray-400 uppercase">Ans d'expérience</p>
+          </div>
+          <div class="border-x border-white/10 px-4">
+            <p class="font-display text-3xl text-gold">3 500<span class="text-lg">+</span></p>
+            <p class="text-xs tracking-wide text-gray-400 uppercase">Clients rasés</p>
+          </div>
+          <div class="pl-4">
+            <p class="font-display text-3xl text-gold">4.9<span class="text-lg">★</span></p>
+            <p class="text-xs tracking-wide text-gray-400 uppercase">Note moyenne</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ================= SERVICES ================= -->
-  <section id="services" class="py-24 px-6 bg-charcoal/60 border-y border-white/5">
+  <!-- ================= BANDEAU DÉFILANT ================= -->
+  <div class="bg-gold text-ink py-3 overflow-hidden border-y border-goldlt/50">
+    <div class="flex whitespace-nowrap animate-[spin_0s] justify-center gap-10 font-extrabold tracking-widest text-sm uppercase">
+      <span><i class="fa-solid fa-scissors mr-2"></i> Coupe homme</span>
+      <span><i class="fa-solid fa-scissors mr-2"></i> Barbe au rasoir</span>
+      <span><i class="fa-solid fa-scissors mr-2"></i> Soins premium</span>
+      <span class="hidden sm:inline"><i class="fa-solid fa-scissors mr-2"></i> Sans rendez-vous</span>
+    </div>
+  </div>
+
+  <!-- ================= PRESTATIONS ================= -->
+  <section id="prestations" class="py-24 px-5">
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-16 reveal">
-        <p class="uppercase tracking-[0.4em] text-gold text-xs mb-4">Nos prestations</p>
-        <h2 class="font-display text-4xl sm:text-5xl font-bold">Tarifs <span class="text-gradient">en FCFA</span></h2>
-        <p class="text-gray-500 mt-4 max-w-md mx-auto">Trois formules taillées pour l'homme moderne.</p>
+        <span class="text-xs tracking-[.3em] uppercase text-gold">Nos prestations</span>
+        <h2 class="font-display text-4xl sm:text-5xl text-white mt-3">Le savoir-faire à la carte</h2>
+        <p class="text-gray-400 mt-4 max-w-xl mx-auto">
+          Trois services phares, pensés pour l'homme qui veut un résultat impeccable.
+          Paiement en espèces, Wave ou Orange Money.
+        </p>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-8">
-        <!-- Prestation 1 -->
-        <article class="reveal card-hover bg-ink/80 border border-white/10 rounded-2xl p-8 flex flex-col">
-          <div class="w-14 h-14 rounded-xl bg-gold/10 border border-gold/30 flex items-center justify-center text-gold text-2xl mb-6">
+      <!-- 3 cartes -->
+      <div class="grid md:grid-cols-3 gap-7">
+
+        <!-- 1. Coupe -->
+        <article class="reveal group relative bg-gradient-to-b from-coal to-charcoal border border-white/10 rounded-2xl p-8 hover:border-gold/60 hover:shadow-gold transition duration-300">
+          <div class="w-14 h-14 rounded-xl bg-gold/10 text-gold grid place-items-center text-2xl mb-6 group-hover:bg-gold group-hover:text-ink transition">
             <i class="fa-solid fa-scissors"></i>
           </div>
-          <h3 class="font-display text-2xl font-bold mb-2">Coupe Classique</h3>
-          <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow">
-            Coupe au ciseau ou tondeuse, dégradé soigné, contours nets et finition à la serviette chaude.
+          <h3 class="font-display text-2xl text-white mb-2">Coupe Homme</h3>
+          <p class="text-sm text-gray-400 mb-6">
+            Dégradé, coupe classique ou ciseaux. Shampoing + coiffage à la cire, finitions au rasoir.
           </p>
-          <ul class="space-y-2 text-sm text-gray-400 mb-8">
-            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gold text-xs"></i> Consultation & conseil</li>
-            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gold text-xs"></i> Dégradé personnalisé</li>
-            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gold text-xs"></i> ~30 min</li>
+          <ul class="space-y-2 text-sm text-gray-400 mb-7">
+            <li><i class="fa-solid fa-check text-gold mr-2"></i> Consultation style incluse</li>
+            <li><i class="fa-solid fa-check text-gold mr-2"></i> Shampoing & soin</li>
+            <li><i class="fa-solid fa-check text-gold mr-2"></i> ~35 min</li>
           </ul>
-          <div class="flex items-end justify-between border-t border-white/5 pt-5">
-            <span class="font-display text-3xl font-bold text-gradient">5 000 <span class="text-base">FCFA</span></span>
-            <a href="https://wa.me/221770000000?text=Bonjour%2C%20je%20souhaite%20r%C3%A9server%20une%20Coupe%20Classique%20(5%20000%20FCFA)."
-               target="_blank" rel="noopener"
-               class="text-[#25D366] hover:text-white hover:bg-[#25D366] border border-[#25D366]/40 rounded-full px-4 py-2 text-sm transition flex items-center gap-2">
-              <i class="fa-brands fa-whatsapp"></i> Réserver
+          <div class="flex items-end justify-between border-t border-white/10 pt-5">
+            <p class="font-display text-3xl text-gold">7 000 <span class="text-base text-gray-400">FCFA</span></p>
+            <a data-service="Coupe Homme" href="#"
+               class="wa-resa grid place-items-center w-11 h-11 rounded-full bg-[#25D366] text-black hover:brightness-110 transition" title="Réserver cette prestation">
+              <i class="fa-brands fa-whatsapp text-lg"></i>
             </a>
           </div>
         </article>
 
-        <!-- Prestation 2 (mise en avant) -->
-        <article class="reveal card-hover bg-gradient-to-b from-gold/10 to-ink/90 border border-gold/40 rounded-2xl p-8 flex flex-col relative glow">
-          <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-ink text-xs font-bold uppercase tracking-widest px-4 py-1 rounded-full">Le plus demandé</span>
-          <div class="w-14 h-14 rounded-xl bg-gold/15 border border-gold/40 flex items-center justify-center text-gold text-2xl mb-6">
+        <!-- 2. Barbe (mise en avant) -->
+        <article class="reveal group relative bg-gradient-to-b from-charcoal to-coal border border-gold/70 rounded-2xl p-8 shadow-gold md:-translate-y-3">
+          <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-ink text-[11px] font-extrabold tracking-widest uppercase px-4 py-1 rounded-full">
+            Le + demandé
+          </span>
+          <div class="w-14 h-14 rounded-xl bg-gold text-ink grid place-items-center text-2xl mb-6">
             <i class="fa-solid fa-user-tie"></i>
           </div>
-          <h3 class="font-display text-2xl font-bold mb-2">Coupe + Barbe</h3>
-          <p class="text-gray-300 text-sm leading-relaxed mb-6 flex-grow">
-            La formule complète : coupe signature, taille et dessin de la barbe à l'huile de ricin et rasoir.
+          <h3 class="font-display text-2xl text-white mb-2">Taille de Barbe</h3>
+          <p class="text-sm text-gray-400 mb-6">
+            Taille à la tondeuse et au rasoir, contours nets à la serviette chaude et huile de barbe.
           </p>
-          <ul class="space-y-2 text-sm text-gray-300 mb-8">
-            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gold text-xs"></i> Coupe signature</li>
-            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gold text-xs"></i> Taille de barbe & rasage</li>
-            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gold text-xs"></i> Serviette chaude & soin</li>
+          <ul class="space-y-2 text-sm text-gray-400 mb-7">
+            <li><i class="fa-solid fa-check text-gold mr-2"></i> Serviette chaude</li>
+            <li><i class="fa-solid fa-check text-gold mr-2"></i> Huile & baume nourrissant</li>
+            <li><i class="fa-solid fa-check text-gold mr-2"></i> ~25 min</li>
           </ul>
-          <div class="flex items-end justify-between border-t border-gold/20 pt-5">
-            <span class="font-display text-3xl font-bold text-gradient">8 000 <span class="text-base">FCFA</span></span>
-            <a href="https://wa.me/221770000000?text=Bonjour%2C%20je%20souhaite%20r%C3%A9server%20la%20formule%20Coupe%20%2B%20Barbe%20(8%20000%20FCFA)."
-               target="_blank" rel="noopener"
-               class="bg-[#25D366] hover:bg-[#1ebe5b] text-white rounded-full px-4 py-2 text-sm transition flex items-center gap-2 font-medium">
-              <i class="fa-brands fa-whatsapp"></i> Réserver
+          <div class="flex items-end justify-between border-t border-white/10 pt-5">
+            <p class="font-display text-3xl text-gold">5 000 <span class="text-base text-gray-400">FCFA</span></p>
+            <a data-service="Taille de Barbe" href="#"
+               class="wa-resa grid place-items-center w-11 h-11 rounded-full bg-[#25D366] text-black hover:brightness-110 transition" title="Réserver cette prestation">
+              <i class="fa-brands fa-whatsapp text-lg"></i>
             </a>
           </div>
         </article>
 
-        <!-- Prestation 3 -->
-        <article class="reveal card-hover bg-ink/80 border border-white/10 rounded-2xl p-8 flex flex-col">
-          <div class="w-14 h-14 rounded-xl bg-gold/10 border border-gold/30 flex items-center justify-center text-gold text-2xl mb-6">
-            <i class="fa-solid fa-crown"></i>
+        <!-- 3. Pack complet -->
+        <article class="reveal group relative bg-gradient-to-b from-coal to-charcoal border border-white/10 rounded-2xl p-8 hover:border-gold/60 hover:shadow-gold transition duration-300">
+          <div class="w-14 h-14 rounded-xl bg-gold/10 text-gold grid place-items-center text-2xl mb-6 group-hover:bg-gold group-hover:text-ink transition">
+            <i class="fa-solid fa-gem"></i>
           </div>
-          <h3 class="font-display text-2xl font-bold mb-2">Rituel Premium</h3>
-          <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow">
-            L'expérience complète : soin visage, masque noir, coupe, barbe et massage crânien relaxant.
+          <h3 class="font-display text-2xl text-white mb-2">Pack Complet</h3>
+          <p class="text-sm text-gray-400 mb-6">
+            La totale : coupe + barbe + soin visage. Le combo signature pour repartir transformé.
           </p>
-          <ul class="space-y-2 text-sm text-gray-400 mb-8">
-            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gold text-xs"></i> Tout Coupe + Barbe</li>
-            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gold text-xs"></i> Soin visage & masque noir</li>
-            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-gold text-xs"></i> Massage crânien ~60 min</li>
-          </ul>
-          <div class="flex items-end justify-between border-t border-white/5 pt-5">
-            <span class="font-display text-3xl font-bold text-gradient">12 000 <span class="text-base">FCFA</span></span>
-            <a href="https://wa.me/221770000000?text=Bonjour%2C%20je%20souhaite%20r%C3%A9server%20le%20Rituel%20Premium%20(12%20000%20FCFA)."
-               target="_blank" rel="noopener"
-               class="text-[#25D366] hover:text-white hover:bg-[#25D366] border border-[#25D366]/40 rounded-full px-4 py-2 text-sm transition flex items-center gap-2">
-              <i class="fa-brands fa-whatsapp"></i> Réserver
-            </a>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= CONTACT ================= -->
-  <section id="contact" class="py-24 px-6">
-    <div class="max-w-4xl mx-auto text-center reveal">
-      <p class="uppercase tracking-[0.4em] text-gold text-xs mb-4">Venez nous voir</p>
-      <h2 class="font-display text-4xl sm:text-5xl font-bold mb-6">On s'occupe du <span class="text-gradient">reste</span></h2>
-      <p class="text-gray-400 mb-10">Un message sur WhatsApp et votre créneau est réservé en un clic.</p>
-
-      <div class="grid sm:grid-cols-3 gap-6 mb-12">
-        <div class="bg-charcoal/60 border border
+          <ul class="space-y-2 text-sm text-gray-400 mb-7">
+            <li><i class="fa-solid fa-check text-gold mr-2"></i> Coupe + barbe + masque visage</li>
+            <li><i class="fa-solid fa-check text-gold mr-2"></i> Thé à la menthe offert</li>
+            <
